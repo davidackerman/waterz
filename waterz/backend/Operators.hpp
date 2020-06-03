@@ -85,6 +85,19 @@ struct square {
 template <typename T>
 using Square = UnaryOperator<T, square>;
 
+template <typename T>
+struct cosemSignedDistanceTransformOfRadius {
+	T operator()(const T& x) const {
+		float r = std::sqrt(x/3.14159265); //Radius (max distance to expect) assuming contact area is circular
+		r = (r<35) ? r : 35;//DGA: For COSEM, 35 (sqrt(1225)) voxels is about the distance beyond which y = 128*tanh(d/50) + 127 saturates (here d is in nm). So we don't wan't to calculate anything beyond that
+		r = 128 * std::tanh(r/12.5) + 127; 
+		//std::cout<<"whattttttt"<<r<<std::endl;
+		return r;
+	}
+};
+template <typename T>
+using CosemSignedDistanceTransformOfRadius = UnaryOperator<T, cosemSignedDistanceTransformOfRadius>;
+
 template <typename T1, typename T2>
 using Add = BinaryOperator<T1, T2, std::plus>;
 

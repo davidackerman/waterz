@@ -41,6 +41,9 @@ class ScoringFunction:
             return Square(self)
         raise RuntimeError("Powers other than 2 not implemented")
 
+    def tanh(self):
+        return CosemSignedDistanceTransformOfRadius(self)
+
     def __repr__(self):
         raise RuntimeError("__repr__ not implemented")
 
@@ -71,6 +74,10 @@ class Square(UnaryOperator):
 
     def __init__(self, a):
         super(Square, self).__init__(a, 'Square')
+
+class CosemSignedDistanceTransformOfRadius(UnaryOperator):
+    def __init__(self, a):
+        super(CosemSignedDistanceTransformOfRadius, self).__init__(a, 'CosemSignedDistanceTransformOfRadius')
 
 
 class BinaryOperator(ScoringFunction):
